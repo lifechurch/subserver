@@ -7,7 +7,6 @@ language: ruby
 cache: bundler
 
 rvm:
-  - ruby
   - 2.3.7
 
 before_script:
