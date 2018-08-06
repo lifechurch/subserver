@@ -2,6 +2,8 @@ Subserver
 ==============
 
 [![Gem Version](https://badge.fury.io/rb/subserver.svg)](https://rubygems.org/gems/subserver)
+[![Maintainability](https://api.codeclimate.com/v1/badges/7aa605d1010c949bfbe4/maintainability)](https://codeclimate.com/github/lifechurch/subserver/maintainability)
+[![Build Status](https://travis-ci.com/lifechurch/subserver.svg?branch=master)](https://travis-ci.com/lifechurch/subserver)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 
 Subserver is a background server process for processing messages from Google Pub/Sub.
