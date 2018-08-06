@@ -8,6 +8,9 @@
 /.bundle
 .env
 
+# Ignore built gem binaries
+.gem
+
 # Ignore the default SQLite database.
 */db/*.sqlite3
 */db/*.sqlite3-journal
