@@ -24,6 +24,8 @@ Bundler.setup
 
 require 'subserver'
 
+$TESTING = true
+
 # Require all Subserver Files
 Dir["{lib}/**/*.rb"].each { |f| require File.expand_path(f) }
 

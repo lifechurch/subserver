@@ -68,6 +68,26 @@ module Subserver
       # Touch middleware so it isn't lazy loaded by multiple threads.
       Subserver.middleware
 
+      # Test Pubsub Connection
+      if ENV['PUBSUB_EMULATOR_HOST']
+        uri = URI.parse("http://#{ENV['PUBSUB_EMULATOR_HOST']}")
+        http = Net::HTTP.new(uri.host, uri.port)
+        begin
+          response = http.request_get(uri)
+        rescue Errno::ECONNREFUSED
+          logger.error "Errno::ECONNREFUSED - Could not connect to Pubsub Emulator at connection: #{ENV['PUBSUB_EMULATOR_HOST']}."
+          logger.info "If you are not intending to connect to the Pubsub Emulator remove the PUBSUB_EMULATOR_HOST environment variable."
+          die(1)
+        end
+      else
+        begin
+          client = Subserver::Pubsub.client
+        rescue StandardError => e
+          logger.error "Pubsub Connection Error: #{e.message}"
+          die(1)
+        end
+      end
+
       # Before this point, the process is initializing with just the main thread.
       # Starting here the process will now have multiple threads running.
       fire_event(:startup, reverse: false, reraise: true)
@@ -263,26 +283,6 @@ module Subserver
         die(1)
       end
 
-      # Test Pubsub Connection
-      if ENV['PUBSUB_EMULATOR_HOST']
-        uri = URI.parse("http://#{ENV['PUBSUB_EMULATOR_HOST']}")
-        http = Net::HTTP.new(uri.host, uri.port)
-        begin
-          response = http.request_get(uri)
-        rescue Errno::ECONNREFUSED
-          logger.error "Errno::ECONNREFUSED - Could not connect to Pubsub Emulator at connection: #{ENV['PUBSUB_EMULATOR_HOST']}."
-          logger.info "If you are not intending to connect to the Pubsub Emulator remove the PUBSUB_EMULATOR_HOST environment variable."
-          die(1)
-        end
-      else
-        begin
-          client = Subserver::Pubsub.client
-        rescue StandardError => e
-          logger.error "Pubsub Connection Error: #{e.message}"
-          die(1)
-        end
-      end
-
       raise ArgumentError, "#{timeout}: #{options[:timeout]} is not a valid value" if options.has_key?(:timeout) && options[:timeout].to_i <= 0
     end
 
@@ -335,8 +335,8 @@ module Subserver
           opts[:logfile] = arg
         end
 
-        o.on '-P', '--pidfile PATH', "path to pidfile" do |arg|
-          opts[:pidfile] = arg
+        o.on '-P', '--port PORT', "port to expose health check on" do |arg|
+          opts[:health_port] = arg
         end
 
         o.on '-V', '--version', "Print version and exit" do |arg|
