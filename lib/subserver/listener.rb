@@ -29,7 +29,7 @@ module Subserver
 
     def initialize(mgr, subscriber)
       @mgr = mgr
-      @down = false
+      @valid = true
       @done = false
       @thread = nil
       @reloader = Subserver.options[:reloader]
@@ -63,14 +63,18 @@ module Subserver
       @thread ||= safe_thread("listener", &method(:run))
     end
 
+    def valid?
+      @valid
+    end
+
     private unless $TESTING
 
     def retrive_subscrption
       subscription_name = @subscriber.get_subserver_options[:subscription]
-      begin
-        subscription = Pubsub.client.subscription subscription_name
-      rescue Google::Cloud::Error => e
-        raise ArgumentError, "Invalid Subscription name: #{subscription_name} Please ensure your Pubsub subscription exists."
+      subscription = Pubsub.client.subscription subscription_name rescue nil
+      if subscription.nil?
+        logger.error "ArgumentError: Invalid Subscription name: #{subscription_name} in subscriber #{@subscriber.name}. Please ensure your Pubsub subscription exists."
+        @valid = false
       end
       subscription
     end

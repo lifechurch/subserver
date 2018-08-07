@@ -25,6 +25,7 @@ module Subserver
 
     attr_reader :listeners
     attr_reader :options
+    attr_reader :subscribers
 
     def initialize(options={})
       logger.debug { options.inspect }
@@ -36,6 +37,8 @@ module Subserver
       subscribers.each do |subscriber|
         @listeners << Listener.new(self, subscriber)
       end
+
+      @listeners.select!{ |l| l.valid? }
 
       @plock = Mutex.new
     end
@@ -92,14 +95,15 @@ module Subserver
     end
 
     def listener_died(listener, subscriber, reason)
-      @plock.synchronize do
-        @listeners.delete(listener)
-        unless @done
-          l = Listener.new(self, subscriber)
-          @listeners << l
-          l.start
-        end
-      end
+      logger.warn("Listener for #{subscriber.name} Died at #{Time.now}: #{reason}")
+      # @plock.synchronize do
+      #   @listeners.delete(listener)
+      #   unless @done
+      #     l = Listener.new(self, subscriber)
+      #     @listeners << l
+      #     l.start
+      #   end
+      # end
     end
 
     def stopped?
@@ -134,17 +138,14 @@ module Subserver
       # Expand Subscriber Directory from relative require 
       path = File.expand_path("#{options[:subscriber_dir]}/*.rb")
 
-      # Load existing set of classes
-      existing_classes = ObjectSpace.each_object(Class).to_a
-
       # Require all subscriber files
       Dir[path].each { |f| require f } 
 
-      # Create set with only newly created classes from require loop
-      new_classes = ObjectSpace.each_object(Class).to_a - existing_classes
+      # Create set of all classes including those in require loop
+      classes = ObjectSpace.each_object(Class).to_a
 
       # Only included named classes that have included the Subscriber module
-      subscribers = new_classes.select do |klass|
+      subscribers = classes.select do |klass|
         klass.name && klass < ::Subserver::Subscriber && options[:queues].include?(klass.subserver_options[:queue])
       end
     end

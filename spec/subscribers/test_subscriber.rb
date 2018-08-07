@@ -2,7 +2,7 @@ require 'subserver/subscriber'
 
 class TestSubscriber
   include Subserver::Subscriber 
-  subserver_options subscription: 'test', streams: 10
+  subserver_options subscription: 'test'
 
   def perform(message)
     logger.info(message)

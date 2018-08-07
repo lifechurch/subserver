@@ -6,11 +6,12 @@ module Subserver
     attr_accessor :server
 
     def initialize
-      @server = TCPServer.new 4481   
+      @server = TCPServer.new Subserver.options[:health_port] || 4081
     end
 
-    def start  
+    def start
       begin
+        logger.debug "Health check avalible on port #{@server.addr[1]}"
         while session = @server.accept
           request = session.gets
 
@@ -29,5 +30,9 @@ module Subserver
     def stop
       @server.close
     end 
+
+    def logger
+      Subserver.logger
+    end
   end
 end 
