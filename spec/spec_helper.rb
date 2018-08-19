@@ -75,7 +75,7 @@ RSpec.configure do |config|
     # Ensure Test Topics
     client = Subserver::Pubsub.client
     topic = client.topic "test"
-    if topic.blank?
+    if topic.nil?
       topic = client.create_topic "test"
       subscription = topic.subscribe "test-subscriber-1"
       subscription = topic.subscribe "test-subscriber-2"
