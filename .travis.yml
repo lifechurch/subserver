@@ -1,6 +1,7 @@
 env:
   global:
     - CC_TEST_REPORTER_ID=f5a226122f0661736323b9f1431103b20ee56788fa5bdda61bd5314b72d47892
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
     - PUBSUB_EMULATOR_HOST=localhost:8085
     - PUBSUB_PROJECT_ID=subserver-ci
 
@@ -16,7 +17,7 @@ rvm:
 install:
   # Install Google Cloud SDK or load it from cache
   - gcloud version || true
-  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; curl https://sdk.cloud.google.com | bash; fi
   # Add gcloud to $PATH
   - source /home/travis/google-cloud-sdk/path.bash.inc
   - gcloud version
