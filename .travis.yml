@@ -27,7 +27,8 @@ install:
 
 before_script:
   # Start Cloud Pubsub Emulator
-  - gcloud beta emulators pubsub start --host-port=8085 &
+  - gcloud beta emulators pubsub start &
+  - sleep 20 # Let emulator start on thread
   # Load Code Climate Test Coverage Reporter
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
