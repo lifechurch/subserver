@@ -1,6 +1,6 @@
-class TestSubscriber
+class OtherSubscriber
   include Subserver::Subscriber
-  subserver_options subscription: 'subserver-test', deadline: 20
+  subserver_options subscription: 'subserver-other'
 
   def perform(message)
     Rails.logger.info(message.data)

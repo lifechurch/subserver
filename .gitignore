@@ -9,7 +9,7 @@
 .env
 
 # Ignore built gem binaries
-.gem
+*.gem
 
 # Ignore the default SQLite database.
 */db/*.sqlite3

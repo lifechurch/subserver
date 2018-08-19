@@ -4,10 +4,17 @@ namespace :subserver do
     # Load Client
     client = Subserver::Pubsub.client
 
-    # Create Topic
-    topic = client.create_topic "subserver-test"
+    # Create Topics
+    if client.topic("subserver-test").nil?
+      topic = client.create_topic "subserver-test"
+      # Create Subscription
+      subscription = topic.subscribe "subserver-test"
+    end
 
-    # Create Subscription
-    subscription = topic.subscribe "subserver-test"
+    if client.topic("subserver-other").nil?
+      topic = client.create_topic "subserver-other"
+      # Create Subscription
+      subscription = topic.subscribe "subserver-other"
+    end
   end
 end
