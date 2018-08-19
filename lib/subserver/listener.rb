@@ -102,8 +102,10 @@ module Subserver
     def process_message(received_message)
       begin
         logger.debug("Executing Middleware")
-        Subserver.middleware.invoke(@subscriber, received_message) do
-          execute_processor(@subscriber, received_message)
+        @reloader.call do
+          Subserver.middleware.invoke(@subscriber, received_message) do
+            execute(@subscriber, received_message)
+          end
         end
       rescue Subserver::Shutdown
         # Reject message if shutdown
@@ -114,47 +116,8 @@ module Subserver
       end
     end
 
-    def execute_processor(subscriber, received_message)
+    def execute(subscriber, received_message)
       subscriber.new.perform(received_message)
-    end
-
-    # Ruby doesn't provide atomic counters out of the box so we'll
-    # implement something simple ourselves.
-    # https://bugs.ruby-lang.org/issues/14706
-    class Counter
-      def initialize
-        @value = 0
-        @lock = Mutex.new
-      end
-
-      def incr(amount=1)
-        @lock.synchronize { @value = @value + amount }
-      end
-
-      def reset
-        @lock.synchronize { val = @value; @value = 0; val }
-      end
-    end
-
-    PROCESSED = Counter.new
-    FAILURE = Counter.new
-    # This is mutable global state but because each thread is storing
-    # its own unique key/value, there's no thread-safety issue AFAIK.
-    WORKER_STATE = {}
-
-    def stats(job_hash, queue)
-      tid = Subserver::Logging.tid
-      WORKER_STATE[tid] = {:queue => queue, :payload => job_hash, :run_at => Time.now.to_i }
-
-      begin
-        yield
-      rescue Exception
-        FAILURE.incr
-        raise
-      ensure
-        WORKER_STATE.delete(tid)
-        PROCESSED.incr
-      end
     end
 
   end

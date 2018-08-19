@@ -8,7 +8,7 @@ module Subserver
 
     def self.initialize_client
       @client = Google::Cloud::Pubsub.new(
-        project_id: options[:project_id],
+        project_id: options[:project_id] || ENV['PUBSUB_PROJECT_ID'],
         credentials: ( File.expand_path(options[:credentials]) if options[:credentials] )
       )
     end

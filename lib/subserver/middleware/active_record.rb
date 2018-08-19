@@ -14,7 +14,7 @@ module Subserver
       def call(*args)
         yield
       ensure
-        ::ActiveRecord::Base.clear_active_connections!
+        ::ActiveRecord::ConnectionAdapters::ConnectionHandler.clear_active_connections! 
       end
     end
   end
