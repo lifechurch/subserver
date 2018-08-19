@@ -60,6 +60,28 @@ RSpec.configure do |config|
   # triggering implicit auto-inclusion in groups with matching metadata.
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
+  # Configure Code to Be Ran before suite loads
+  config.before(:suite) do
+    # Check Emulator Running
+    uri = URI.parse("http://#{ENV['PUBSUB_EMULATOR_HOST']}")
+    http = Net::HTTP.new(uri.host, uri.port)
+    begin
+      response = http.request_get(uri)
+    rescue Errno::ECONNREFUSED
+      puts "Errno::ECONNREFUSED - Could not connect to Pubsub Emulator at connection: #{ENV['PUBSUB_EMULATOR_HOST']}."
+      exit 1
+    end
+
+    # Ensure Test Topics
+    client = Subserver::Pubsub.client
+    topic = client.topic "test"
+    if topic.blank?
+      topic = client.create_topic "test"
+      subscription = topic.subscribe "test-subscriber-1"
+      subscription = topic.subscribe "test-subscriber-2"
+    end
+  end 
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
