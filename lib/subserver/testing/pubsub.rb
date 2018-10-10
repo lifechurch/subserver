@@ -3,12 +3,12 @@ module Subserver
     class Pubsub
 
       class Topic
-        def publish
+        def publish(data)
           true
         end
       end
 
-      def topic
+      def topic(name)
         Topic.new
       end
 
