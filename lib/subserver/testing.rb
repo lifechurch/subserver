@@ -1,3 +1,5 @@
+require 'subserver/testing/pubsub'
+
 module Subserver
   module Testing
 
