@@ -6,6 +6,10 @@ module Subserver
       defined?(@client) ? @client : initialize_client
     end
 
+    def self.client=(client)
+      @client = client
+    end
+
     def self.initialize_client
       @client = Google::Cloud::Pubsub.new(
         project_id: options[:project_id] || ENV['PUBSUB_PROJECT_ID'],
@@ -17,4 +21,5 @@ module Subserver
       Subserver.options
     end
   end
-end
+end 
+
