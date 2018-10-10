@@ -63,12 +63,13 @@ RSpec.configure do |config|
   # Configure Code to Be Ran before suite loads
   config.before(:suite) do
     # Check Emulator Running
-    uri = URI.parse("http://#{ENV['PUBSUB_EMULATOR_HOST']}")
+    host = ENV['PUBSUB_EMULATOR_HOST'] ||= 'localhost:8085'
+    uri = URI.parse("http://#{host}")
     http = Net::HTTP.new(uri.host, uri.port)
     begin
       response = http.request_get(uri)
     rescue Errno::ECONNREFUSED
-      puts "Errno::ECONNREFUSED - Could not connect to Pubsub Emulator at connection: #{ENV['PUBSUB_EMULATOR_HOST']}."
+      puts "Errno::ECONNREFUSED - Could not connect to Pubsub Emulator at connection: #{host}."
       exit 1
     end
 

@@ -1,5 +1,5 @@
 module Subserver
-  class Testing
+  module Testing
 
     def self.fake!
       Subserver::Pubsub.client = Subserver::Testing::Pubsub.new
