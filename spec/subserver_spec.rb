@@ -53,7 +53,7 @@ RSpec.describe Subserver do
     end
 
     describe 'listener_startup event' do
-      it 'runs when listener started', focus: true do
+      it 'runs when listener started' do
         expect(@tester).to receive(:ping)
         listener = Subserver::Listener.new(@manager, test_subscriber)
         listener.fire_event(:listener_startup, reverse: false, reraise: true)
