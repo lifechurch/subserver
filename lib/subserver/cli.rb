@@ -88,8 +88,8 @@ module Subserver
         end
       end
 
-      # Before this point, the process is initializing with just the main thread.
-      # Starting here the process will now have multiple threads running.
+      # Until this point, the process is initializing with just the main thread.
+      # After this point the process will have multiple threads running.
       fire_event(:startup, reverse: false, reraise: true)
 
       logger.debug { "Middleware: #{Subserver.middleware.map(&:klass).join(', ')}" }
