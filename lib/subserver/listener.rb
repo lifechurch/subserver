@@ -90,6 +90,8 @@ module Subserver
 
     def run
       begin
+        # This begins the listener process in a forked thread
+        fire_event(:listener_startup, reverse: false, reraise: true)
         connect_subscriber
         @pubsub_listener.start
       rescue Subserver::Shutdown

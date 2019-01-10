@@ -26,6 +26,7 @@ module Subserver
     death_handlers: [],
     lifecycle_events: {
       startup: [],
+      listener_startup: [],
       quiet: [],
       shutdown: [],
       heartbeat: [],
