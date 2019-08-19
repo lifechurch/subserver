@@ -34,7 +34,7 @@ module Subserver
       @thread = nil
       @reloader = Subserver.options[:reloader]
       @subscriber = subscriber
-      @subscription = retrive_subscrption
+      @subscription = retrieve_subscription
       @logging = (mgr.options[:message_logger] || Subserver::MessageLogger).new
     end
 
@@ -69,7 +69,7 @@ module Subserver
 
     private unless $TESTING
 
-    def retrive_subscrption
+    def retrieve_subscription
       subscription_name = @subscriber.get_subserver_options[:subscription]
       subscription = Pubsub.client.subscription subscription_name rescue nil
       if subscription.nil?
