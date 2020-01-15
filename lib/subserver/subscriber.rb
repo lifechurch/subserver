@@ -11,7 +11,6 @@ module Subserver
     end
 
     module ClassMethods
-
       def can_auto_subscribe?
         respond_to? :ensure_subscription_exists
       end
@@ -22,7 +21,7 @@ module Subserver
 
       def get_subserver_options
         self.subserver_options_hash ||= Subserver.default_subscriber_options
-      end
+      end 
 
       def subserver_class_attribute(*attrs)
         instance_reader = true

@@ -37,7 +37,7 @@ module Subserver
   DEFAULT_SUBSCRIBER_OPTIONS = {
     subscription: nil,
     deadline: 60,
-    streams: 2,
+    streams: 2, 
     threads: {
       callback: 4,
       push: 2
@@ -145,10 +145,6 @@ module Subserver
     options[:lifecycle_events][event] << block
   end
 
-  def self.active_job?
-    defined?(::ActiveJob)
-  end
-
   # We are shutting down Subserver but what about workers that
   # are working on some long job?  This error is
   # raised in workers that have not finished within the hard
@@ -158,7 +154,7 @@ module Subserver
   class Shutdown < Interrupt; end
 
   private
-
+  
   def self.parse_config(cfile)
     opts = {}
     if File.exist?(cfile)
