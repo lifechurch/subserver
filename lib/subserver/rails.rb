@@ -8,6 +8,7 @@ module Subserver
     # class block. Definitely before config/environments/*.rb and
     # config/initializers/*.rb.
     config.before_configuration do
+      require 'subserver/extensions/active_job_adapter'
       if ::Rails::VERSION::MAJOR < 5 && defined?(::ActiveRecord)
         Subserver.middleware do |chain|
           require 'subserver/middleware/active_record'
