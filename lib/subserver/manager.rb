@@ -30,11 +30,12 @@ module Subserver
     def initialize(options={})
       logger.debug { options.inspect }
       @options = options
-      
+
       @done = false
       @listeners = Set.new
 
       subscribers.each do |subscriber|
+        subscriber.ensure_subscription_exists if subscriber.can_auto_subscribe?
         @listeners << Listener.new(self, subscriber)
       end
 
