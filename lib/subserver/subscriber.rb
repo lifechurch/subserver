@@ -12,13 +12,17 @@ module Subserver
 
     module ClassMethods
 
+      def can_auto_subscribe?
+        respond_to? :ensure_subscription_exists
+      end
+
       def subserver_options(opts={})
         self.subserver_options_hash = get_subserver_options.merge(opts)
       end
 
       def get_subserver_options
         self.subserver_options_hash ||= Subserver.default_subscriber_options
-      end 
+      end
 
       def subserver_class_attribute(*attrs)
         instance_reader = true
