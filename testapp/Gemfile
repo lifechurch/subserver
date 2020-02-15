@@ -15,3 +15,4 @@ gem 'dotenv-rails', require: 'dotenv/rails-now'
 # Load Subserver from development path
 gem 'subserver', :path => '..'
 gem 'rspec'
+gem 'pry'

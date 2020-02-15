@@ -36,3 +36,5 @@
 
 # Ignore SimpleCov dir
 coverage
+
+.idea
