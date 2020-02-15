@@ -112,9 +112,12 @@ module Subserver
       rescue Subserver::Shutdown
         # Reject message if shutdown
         received_message.reject!
-      rescue Exception => ex
-        handle_exception(e, { context: "Exception raised during message processing.", message: received_message })
-        raise e
+      rescue StandardError => error
+        handle_exception error, {
+          context: 'Exception raised during message processing.',
+          message: received_message
+        }
+        raise
       end
     end
 
