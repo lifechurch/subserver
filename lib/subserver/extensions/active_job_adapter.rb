@@ -68,6 +68,10 @@ module ActiveJob
           topic.subscribe subscription_name
         end
 
+        def configured_as_active_job_adapter?
+          Rails.configuration.active_job.queue_adapter == :subserver
+        end
+
         protected
 
         def rails_app_name_until_rails_six
