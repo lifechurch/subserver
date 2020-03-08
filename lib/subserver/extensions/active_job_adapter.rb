@@ -100,7 +100,7 @@ module ActiveJob
       class JobWrapper #:nodoc:
         include Subserver::Subscriber
 
-        def self.ensure_subscription_exists
+        def self.auto_subscribe
           SubserverAdapter.subscription || SubserverAdapter.create_subscription
         end
 
