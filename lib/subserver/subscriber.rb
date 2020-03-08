@@ -11,9 +11,8 @@ module Subserver
     end
 
     module ClassMethods
-
-      def can_auto_subscribe?
-        respond_to? :ensure_subscription_exists
+      def auto_subscribe?
+        respond_to? :auto_subscribe
       end
 
       def subserver_options(opts={})
