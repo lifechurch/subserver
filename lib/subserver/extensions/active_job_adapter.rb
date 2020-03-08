@@ -26,10 +26,26 @@ module ActiveJob
           instance.enqueue_at(job, timestamp)
         end
 
+        # Used as part of the subscription name, it differentiates subscribers
+        # of the same Google Pub/Sub topic by the application they belong to.
+        def rails_app_name
+          return rails_app_name_since_rails_six \
+            if Rails.version.starts_with?('6')
+
+          rails_app_name_until_rails_six
+        end
+
+        # Used as part of the subscription name, it differentiates subscribers
+        # of the same application that belong to different environments (i.e.
+        # development, testing, production, or even local) that might be
+        # subscribed to the same Google Pub/Sub topic.
+        def app_deployment_name
+          ENV.fetch('DEPLOYMENT_NAME', Rails.env)
+        end
+
         def processor_prefix
-          @processor_prefix ||= Rails.application.class.parent_name.downcase +
-                                '-' +
-                                ENV.fetch('DEPLOYMENT_NAME', Rails.env).downcase
+          @processor_prefix ||= "#{rails_app_name}-#{app_deployment_name}"
+                                .downcase
         end
 
         def topic_name
@@ -50,6 +66,16 @@ module ActiveJob
 
         def create_subscription
           topic.subscribe subscription_name
+        end
+
+        protected
+
+        def rails_app_name_until_rails_six
+          Rails.application.class.parent_name
+        end
+
+        def rails_app_name_since_rails_six
+          Rails.application.class.module_parent_name
         end
       end
 
