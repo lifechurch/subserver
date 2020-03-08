@@ -1,3 +1,6 @@
+# 0.4.1
+- Fix Listener#process_message error handling
+
 # 0.4.0
 - Adds listener_startup lifecycle event
 
