@@ -105,6 +105,8 @@ module ActiveJob
         include Subserver::Subscriber
 
         def self.auto_subscribe
+          return unless SubserverAdapter.configured_as_active_job_adapter?
+
           SubserverAdapter.subscription || SubserverAdapter.create_subscription
         end
 
