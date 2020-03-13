@@ -30,7 +30,7 @@ module Subserver
     def initialize(options={})
       logger.debug { options.inspect }
       @options = options
-
+      
       @done = false
       @listeners = Set.new
 

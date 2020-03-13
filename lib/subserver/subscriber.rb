@@ -21,7 +21,7 @@ module Subserver
 
       def get_subserver_options
         self.subserver_options_hash ||= Subserver.default_subscriber_options
-      end
+      end 
 
       def subserver_class_attribute(*attrs)
         instance_reader = true
