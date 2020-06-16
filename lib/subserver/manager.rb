@@ -35,6 +35,7 @@ module Subserver
       @listeners = Set.new
 
       subscribers.each do |subscriber|
+        next if subscriber.auto_subscribe? && !subscriber.auto_subscribe
         @listeners << Listener.new(self, subscriber)
       end
 

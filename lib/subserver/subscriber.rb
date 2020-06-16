@@ -11,6 +11,9 @@ module Subserver
     end
 
     module ClassMethods
+      def auto_subscribe?
+        respond_to? :auto_subscribe
+      end
 
       def subserver_options(opts={})
         self.subserver_options_hash = get_subserver_options.merge(opts)
