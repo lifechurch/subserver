@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.executables   = ['subserver']
   gem.files         = Dir["{lib}/**/*.rb", "bin/*", "LICENSE", "*.md"]
   gem.require_paths = ["lib"]
-  gem.required_ruby_version = ">= 2.3.1"
+  gem.required_ruby_version = ">= 2.4.7"
 
-  gem.add_dependency 'google-cloud-pubsub', '~> 0.31', '>= 0.31.0'
+  gem.add_dependency 'google-cloud-pubsub', '~> 1.7', '>= 0.31.0'
 end

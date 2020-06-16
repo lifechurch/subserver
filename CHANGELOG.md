@@ -1,3 +1,10 @@
+# 0.4.3
+- Dependacy Updates
+- Ruby >=2.4
+- google-cloud-pubsub ~> 1.7
+- self.auto_subscribe method #25
+- Subserver::Testing::Pubsub::Topic.publish now supports the `attributes` arugment
+
 # 0.4.1
 - Fix Listener#process_message error handling
 
