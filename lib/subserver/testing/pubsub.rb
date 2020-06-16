@@ -3,7 +3,7 @@ module Subserver
     class Pubsub
 
       class Topic
-        def publish(data)
+        def publish(data, attributes = {})
           true
         end
       end
