@@ -21,9 +21,9 @@ Subserver is based off of [Sidekiq](https://github.com/mperham/sidekiq). A huge 
 
 ## Requirements
 Subserver Supports:
-- Ruby >= 2.3.1
+- Ruby >= 2.4.0
 - All Rails releases >= 4.0
-- Google Cloud PubSub Ruby >= 0.31.0
+- Google Cloud PubSub Ruby >= 1.7.0
 
 ## Getting Started
 ### Install
