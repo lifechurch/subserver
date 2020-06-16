@@ -1,3 +1,6 @@
+# 0.4.4
+- Fixes `Subserver::Testing::Pubsub.topic` missing arguments 
+
 # 0.4.3
 - Dependacy Updates
 - Ruby >=2.4

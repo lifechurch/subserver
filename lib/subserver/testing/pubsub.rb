@@ -8,7 +8,7 @@ module Subserver
         end
       end
 
-      def topic(name)
+      def topic(name, project: nil, skip_lookup: nil, async: nil)
         Topic.new
       end
 
