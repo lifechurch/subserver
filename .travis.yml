@@ -12,7 +12,7 @@ cache:
     - "$HOME/google-cloud-sdk/"
 
 rvm:
-  - 2.3.7
+  - 2.6.1
 
 install:
   # Install Google Cloud SDK or load it from cache

@@ -1,3 +1,7 @@
+# 0.5.0
+- Dependency updates
+- google-cloud-pubsub 2.0
+
 # 0.4.4
 - Fixes `Subserver::Testing::Pubsub.topic` missing arguments 
 
