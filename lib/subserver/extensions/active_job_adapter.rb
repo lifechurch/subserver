@@ -30,7 +30,7 @@ module ActiveJob
         # of the same Google Pub/Sub topic by the application they belong to.
         def rails_app_name
           return rails_app_name_since_rails_six \
-            if Rails.version.starts_with?('6')
+            if Rails.version.start_with?('6')
 
           rails_app_name_until_rails_six
         end
