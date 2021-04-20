@@ -14,5 +14,5 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.required_ruby_version = ">= 2.4.7"
 
-  gem.add_dependency 'google-cloud-pubsub', '>= 1.7', '< 3.0'
+  gem.add_dependency 'google-cloud-pubsub', '>= 2.0', '< 3.0'
 end
