@@ -1,3 +1,9 @@
+# 0.5.2
+- Fix syntax issue
+
+# 0.5.1
+- Dependency updates
+
 # 0.5.0
 - Dependency updates
 - google-cloud-pubsub 2.0
@@ -6,7 +12,7 @@
 - Fixes `Subserver::Testing::Pubsub.topic` missing arguments 
 
 # 0.4.3
-- Dependacy Updates
+- Dependency updates
 - Ruby >=2.4
 - google-cloud-pubsub ~> 1.7
 - self.auto_subscribe method #25

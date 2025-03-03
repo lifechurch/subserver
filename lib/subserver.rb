@@ -62,7 +62,7 @@ module Subserver
   def self.load_config(file=nil)
     opts = DEFAULTS.dup
     file = Dir["config/subserver.yml*"].first if file.nil?
-    return opts unless file && File.exists?(file)
+    return opts unless file && File.exist?(file)
     opts.merge(parse_config(file))
   end
 
